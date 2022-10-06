@@ -29,6 +29,7 @@ class PublicController extends Controller {
     async login_POST(req, res) {
         const { email, code: password } = req.body;
         const player = await playerModel.findOne({ email });
+        console.log({ player });
         if (!player || player.password !== password) {
             req.flash("errors", ["Identifiants incorrects."]);
             return res.redirect(Routes.LOGIN);
