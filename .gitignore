@@ -3,5 +3,7 @@
 /src
 /static/scss
 .env
+.env.unused
 .todo
-.tsconfig.json
+package-lock.json
+tsconfig.json
