@@ -1,0 +1,10 @@
+extends /__base.pug
+
+append header
+  include /.inc/nav.inc.pug
+
+block main
+  include /.inc/players-table.inc.pug
+  a.btn.btn-primary(href=routes.ADMIN.ADD_PLAYER style="margin-top: 1em;")
+      i.fa-sharp.fa-solid.fa-plus.me-2
+      span Ajouter un joueur

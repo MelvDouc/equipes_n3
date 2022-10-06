@@ -1,0 +1,19 @@
+extends __base.pug
+
+block config
+  - const title = "Connexion"
+
+block header
+  h1.text-center.p-1.m-0 Connexion
+
+block main
+  div.h-100.w-100.d-flex.justify-content-center.align-items-center
+    form.form.bg-primary.text-light.rounded(method="POST" action=routes.LOGIN)
+      div
+        label.form-label(for="email") Adresse email
+        input.form-control(type="email" id="email" name="email" required autofocus)
+      div
+        label.form-label(for="code") Code à 6 caractères
+        input.form-control(type="password" id="code" name="code" required)
+      div.text-center
+        button.btn.btn-success(type="submit") Se connecter

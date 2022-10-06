@@ -1,0 +1,25 @@
+table.table.table-striped.table-dark
+  thead.text-center
+    tr
+      th Rd.
+      th Adversaire
+      th Adresse
+      th Ville
+      th Code postal
+      th Date
+      th Je peux jouer
+      th Je peux conduire
+  tbody
+    each match in matches
+      tr
+        td=match.round
+        td=match.opponent
+        td
+          address=match.address
+        td=match.city
+        td=match.postalCode
+        td=match.date
+        td.text-center.align-middle
+          input(type="checkbox" is="presence-updater" data-list="players" data-round=match.round checked=match.isPlaying)
+        td.text-center.align-middle
+          input(type="checkbox" is="presence-updater" data-list="drivers" data-round=match.round checked=match.isDriving)

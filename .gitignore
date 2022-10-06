@@ -1,0 +1,7 @@
+/.vscode
+/node_modules
+/src
+/static/scss
+.env
+.todo
+.tsconfig.json

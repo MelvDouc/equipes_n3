@@ -1,0 +1,10 @@
+extends /__base.pug
+
+append header
+  include /.inc/nav.inc.pug
+
+block main
+  ul
+    each round in rounds
+      li
+        a(href=`${routes.ADMIN.ROUNDS}?rd=${round}`) Ronde #{round}

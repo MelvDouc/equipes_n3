@@ -1,0 +1,14 @@
+nav.navbar.navbar-expand-lg.navbar-dark
+  div.flex-grow-1.me-auto
+    ul.navbar-nav.me-auto
+      li.nav-item
+        a.nav-link(href=routes.MATCHES) Matchs
+      if player.role < 2
+        li.nav-item
+          a.nav-link(href=routes.ADMIN.PLAYERS) Joueurs
+        li.nav-item
+          a.nav-link(href=routes.ADMIN.ROUNDS) Rondes
+  div.pe-2.d-flex.justify-content-between.align-items-center
+    u.d-inline-block.me-2=player.email
+    a.fs-5.text-light.text-decoration-none.hover-red.d-flex.justify-content-center.align-items.center(href=routes.LOGOUT)
+      i.fa-sharp.fa-solid.fa-power-off

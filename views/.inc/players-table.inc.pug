@@ -1,0 +1,31 @@
+table.table.table-striped.table-dark
+  thead.text-center
+    tr
+      th NOM Prénom
+      th N° FFE
+      th N° FIDE
+      th Email
+      th Tél.
+      th Cat.
+      th Titre d'arbitre
+      th Actions
+  tbody
+    each _p in players
+      tr
+        td=`${_p.lastName} ${_p.firstName}`
+        td=_p.ffeId
+        td
+          if _p.fideId && _p.fideId.length > 1
+            a(href=`https://ratings.fide.com/profile/${_p.fideId}` target="_blank")=_p.fideId
+        td=_p.email
+        td=_p.phoneNumber
+        td=_p.cat
+        td=_p.refereeTitle
+        td
+          div.d-flex.align-items-center.justify-content-around
+            a(href=`${routes.ADMIN.UPDATE_PLAYER}?ffeId=${_p.ffeId}`)
+              i.fa-sharp.fa-solid.fa-pen
+            if _p.email != player.email && _p.role > player.role
+              form(is="delete-player-form" action=`${routes.ADMIN.DELETE_PLAYER}?ffeId=${_p.ffeId}`)
+                button.all-unset.cursor-pointer.text-danger(type="submit")
+                  i.fa-sharp.fa-solid.fa-trash

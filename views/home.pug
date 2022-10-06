@@ -1,0 +1,11 @@
+extends __base.pug
+
+block config
+  - const title = "Accueil"
+
+append header
+  include /.inc/nav.inc.pug
+
+block main
+  p.mb-3 Tous les matchs commencent à #[strong 14h15].
+  include /.inc/matches-table.inc.pug

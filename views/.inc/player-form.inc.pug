@@ -1,0 +1,39 @@
+mixin playerForm(action, submitText)
+  form.form.bg-primary.text-light.rounded(action=action method="POST")
+    div.row
+      div.col
+        label.form-label(for="ffeId") N° FFE
+        input.form-control(type="text" id="ffeId" name="ffeId" value=p.ffeId placeholder="N° FFE" pattern="[A-Z][0-9]{5}" required)
+      div.col
+        label.form-label(for="fideId") N° FIDE
+        input.form-control(type="number" id="fideId" name="fideId" placeholder="N° FIDE" value=p.fideId)
+    div.row
+      div.col
+        label.form-label(for="firstName") Prénom
+        input.form-control(type="text" id="firstName" name="firstName" value=p.firstName placeholder="Prénom" required)
+      div.col
+        label.form-label(for="lastName") Nom de famille
+        input.form-control(type="text" id="lastName" name="lastName" value=p.lastName placeholder="Nom de famille" required)
+    div.row
+      div.col
+        label.form-label(for="email") Email
+        input.form-control(type="email" id="email" name="email" value=p.email placeholder="Email" required)
+      div.col
+        label.form-label(for="phoneNumber") N° de téléphone
+        input.form-control(type="tel" id="phoneNumber" name="phoneNumber" value=p.phoneNumber placeholder="Tél.")
+    div.row
+      div.col
+        label.form-label(for="cat") Cat.
+        input.form-control(type="text" id="cat" name="cat" value=p.cat placeholder="Cat.")
+      div.col
+        label.form-label(for="role") Rôle
+        select.form-control(name="role" id="role")
+          each role in roles
+            option(value=role[0] selected=(p && p.role === role[0] || role[0] === "JOUEUR"))=role[1]
+    div.row
+      div.col
+        label.form-label(for="refereeTitle") Titre d'arbitre
+        input.form-control(type="text" id="refereeTitle" name="refereeTitle" value=p.refereeTitle placeholder="Titre d'arbitre")
+    div.d-flex.justify-content-center.align-items-center
+      button.btn.btn-success.me-2(type="submit")=submitText
+      a.text-light(href=routes.ADMIN.HOME) Annuler

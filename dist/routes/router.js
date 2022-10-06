@@ -1,0 +1,12 @@
+import { Router } from "express";
+import adminController from "../controllers/admin.controller.js";
+import apiController from "../controllers/api.controller.js";
+import publicController from "../controllers/public.controller.js";
+import setFlash from "../middleware/flash.middleware.js";
+const router = Router();
+router.use(setFlash);
+router.use(publicController.router);
+router.use(apiController.router);
+router.use(adminController.router);
+router.get("*", publicController.pageNotFound);
+export default router;
