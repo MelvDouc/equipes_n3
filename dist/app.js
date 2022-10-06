@@ -11,7 +11,7 @@ async function main() {
     const isProd = process.env.NODE_ENV === "production";
     const port = process.env.PORT ?? 5050;
     const app = express();
-    app.set("trust proxt", 1);
+    app.set("trust proxy", 1);
     app.set("view engine", "pug");
     app.locals.basedir = app.get("views");
     app.locals.routes = Routes;
