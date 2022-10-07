@@ -131,8 +131,7 @@ class AdminController extends Controller {
         if (req.session.player?.role !== 0)
             return this.forbidden(res);
         for await (const player of playerModel.collection.find())
-            if (player.firstName === "Melvin")
-                await notifyPlayer(player);
+            await notifyPlayer(player);
         req.flash("success", "Les joueurs ont bien été notifiés.");
         return res.redirect(Routes.ADMIN.PLAYERS);
     }
