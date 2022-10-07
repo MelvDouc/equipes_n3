@@ -4,10 +4,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+import { Router } from "express";
 import Controller from "../core/Controller.js";
 import matchModel from "../models/match.model.js";
 import playerModel from "../models/player.model.js";
 import Routes from "../routes/Routes.js";
+import webScraperService from "../services/web-scraper.service.js";
+const router = Router();
+const allRounds = async (res) => res.render("admin/round", {
+    rounds: await matchModel.getRounds()
+});
+router.get(Routes.ADMIN.ROUNDS, async (req, res) => {
+});
 class AdminController extends Controller {
     trim(input) {
         if (input === undefined)
@@ -53,7 +61,11 @@ class AdminController extends Controller {
         const match = await matchModel.getMatchByRound(round);
         if (!match)
             return res.redirect(Routes.ADMIN.ROUNDS);
-        return res.render("admin/round", { match });
+        const players = (await playerModel.findAll().toArray()).filter(({ email }) => match.players.includes(email));
+        for (const player of players)
+            player.rating = await webScraperService.fetchRating(player.fideId);
+        players.sort((a, b) => b.rating - a.rating);
+        return res.render("admin/round", { match, players });
     }
     addPlayer_GET(req, res) {
         const p = res.locals.temp_player ?? {};
