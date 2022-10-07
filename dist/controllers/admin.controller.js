@@ -8,7 +8,6 @@ import Controller from "../core/Controller.js";
 import matchModel from "../models/match.model.js";
 import playerModel from "../models/player.model.js";
 import Routes from "../routes/Routes.js";
-import { notifyPlayer } from "../services/email.service.js";
 class AdminController extends Controller {
     trim(input) {
         if (input === undefined)
@@ -128,11 +127,7 @@ class AdminController extends Controller {
         }
     }
     async notifyPlayers(req, res) {
-        if (req.session.player?.role !== 0)
-            return this.forbidden(res);
-        for await (const player of playerModel.collection.find())
-            await notifyPlayer(player);
-        req.flash("success", "Les joueurs ont bien été notifiés.");
+        // DISUSED
         return res.redirect(Routes.ADMIN.PLAYERS);
     }
     async home(req, res) {
