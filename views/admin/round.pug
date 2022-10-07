@@ -4,4 +4,10 @@ append header
   include /.inc/nav.inc.pug
 
 block main
-  p=match.date
+  div
+    p=match.date
+    p=match.city
+    each p in players
+      div
+        span=`${p.lastName} ${p.firstName}`
+        span=p.rating
