@@ -24,6 +24,10 @@ class PublicController extends Controller {
         });
     }
     login_GET(req, res) {
+        if (req.session.player) {
+            req.flash("success", "Vous êtes déjà connecté.");
+            return res.redirect(Routes.MATCHES);
+        }
         return res.render("login");
     }
     async login_POST(req, res) {

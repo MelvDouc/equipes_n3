@@ -120,6 +120,7 @@ class AdminController extends Controller {
             return res.json({ success: false });
         }
     }
+    // @Controller.Post()
     async home(req, res) {
         res.render("admin/home", {
             players: await playerModel.findAll().toArray()
