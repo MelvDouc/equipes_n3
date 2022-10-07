@@ -13,6 +13,7 @@ const Routes = {
         ADD_PLAYER: ADMIN + "/joueurs/ajouter",
         UPDATE_PLAYER: ADMIN + "/joueurs/modifier",
         DELETE_PLAYER: ADMIN + "/joueurs/supprimer",
+        NOTIFY_PLAYERS: ADMIN + "/joueurs/notifier",
         PLAYERS: ADMIN + "/joueurs",
         ROUNDS: ADMIN + "/rondes",
     }

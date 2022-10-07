@@ -22,10 +22,10 @@ html(lang="fr")
     header.bg-primary.bg-gradient.text-light
       block header
     main.h-100.p-3.position-relative
-      if success
-        div.position-absolute=success
+      if success.length
+        div.flash.success=success
       if errors.length
-        ul
+        ul.mb-0.flash.errors
           each error in errors
             li=error
       block main

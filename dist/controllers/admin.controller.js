@@ -8,11 +8,15 @@ import Controller from "../core/Controller.js";
 import matchModel from "../models/match.model.js";
 import playerModel from "../models/player.model.js";
 import Routes from "../routes/Routes.js";
+import { notifyPlayer } from "../services/email.service.js";
 class AdminController extends Controller {
     trim(input) {
         if (input === undefined)
             return "";
         return input.trim();
+    }
+    forbidden(res) {
+        return res.status(403).send("<h1>403 Forbidden</h1>");
     }
     getPlayer(body) {
         return {
@@ -36,7 +40,7 @@ class AdminController extends Controller {
     allowOnlyAdmin(req, res, next) {
         const player = req.session.player;
         if (!player || !playerModel.isAdmin(player))
-            return res.status(403).send("<h1>403 Forbidden</h1>");
+            return this.forbidden(res);
         res.locals.player = player;
         res.locals.title = "Admin | Équipe Thionville";
         next();
@@ -104,6 +108,9 @@ class AdminController extends Controller {
             if (await playerModel.findOne({ email: player.email }))
                 return this.redirectWithError(req, res, player, ["Adresse email indisponible."]);
         }
+        const errors = [...playerModel.getErrors(player)];
+        if (errors.length)
+            return this.redirectWithError(req, res, player, errors);
         await playerModel.update(dbPlayer, player);
         req.flash("success", "Le joueur a bien été modifié.");
         return res.redirect(Routes.ADMIN.PLAYERS);
@@ -120,7 +127,15 @@ class AdminController extends Controller {
             return res.json({ success: false });
         }
     }
-    // @Controller.Post()
+    async notifyPlayers(req, res) {
+        if (req.session.player?.role !== 0)
+            return this.forbidden(res);
+        for await (const player of playerModel.collection.find())
+            if (player.firstName === "Melvin")
+                await notifyPlayer(player);
+        req.flash("success", "Les joueurs ont bien été notifiés.");
+        return res.redirect(Routes.ADMIN.PLAYERS);
+    }
     async home(req, res) {
         res.render("admin/home", {
             players: await playerModel.findAll().toArray()
@@ -148,6 +163,9 @@ __decorate([
 __decorate([
     Controller.Delete(Routes.ADMIN.DELETE_PLAYER)
 ], AdminController.prototype, "deletePlayer", null);
+__decorate([
+    Controller.Post(Routes.ADMIN.NOTIFY_PLAYERS)
+], AdminController.prototype, "notifyPlayers", null);
 __decorate([
     Controller.Get(Routes.ADMIN.PLAYERS),
     Controller.Get(Routes.ADMIN.HOME)

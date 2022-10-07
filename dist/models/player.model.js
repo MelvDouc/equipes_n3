@@ -25,7 +25,7 @@ const isAdmin = (player) => player.role <= Roles.ADMIN;
 function* getErrors(player) {
     if (!validate(player.email))
         yield "Adresse email non valide.";
-    else if (!/^[A-Z]\d{1,5}$/.test(player.ffeId))
+    if (!/^[A-Z]\d{1,5}$/.test(player.ffeId))
         yield "N° FFE non valide.";
     if (!player.lastName)
         yield "Nom de famille requis.";

@@ -6,5 +6,9 @@ append header
 block main
   include /.inc/players-table.inc.pug
   a.btn.btn-primary(href=routes.ADMIN.ADD_PLAYER style="margin-top: 1em;")
-      i.fa-sharp.fa-solid.fa-plus.me-2
-      span Ajouter un joueur
+    i.fa-sharp.fa-solid.fa-plus.me-2
+    span Ajouter un joueur
+  if player.role === 0
+    div
+      form(action=routes.ADMIN.NOTIFY_PLAYERS method="POST" style="margin-top: 1em;")
+        button.btn.btn-primary(type="submit") Notifier les joueurs

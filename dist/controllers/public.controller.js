@@ -25,7 +25,8 @@ class PublicController extends Controller {
     }
     login_GET(req, res) {
         if (req.session.player) {
-            req.flash("success", "Vous êtes déjà connecté.");
+            console.log(req.session);
+            req.flash("success", "Vous êtes déjà connecté(e).");
             return res.redirect(Routes.MATCHES);
         }
         return res.render("login");
@@ -33,7 +34,6 @@ class PublicController extends Controller {
     async login_POST(req, res) {
         const { email, code: password } = req.body;
         const player = await playerModel.findOne({ email });
-        console.log({ player });
         if (!player || player.password !== password) {
             req.flash("errors", ["Identifiants incorrects."]);
             return res.redirect(Routes.LOGIN);

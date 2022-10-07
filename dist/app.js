@@ -24,7 +24,7 @@ async function main() {
         store: db.store,
         cookie: {
             secure: isProd,
-            maxAge: 31536000000
+            maxAge: 1000 * 60 * 60 * 24 * 7
         }
     }));
     app.use(flash());
