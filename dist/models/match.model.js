@@ -31,7 +31,7 @@ const getPlayerMatches = (email) => (collection
         ...others
     };
 })
-    .sort({ round: -1 })
+    .sort({ round: 1 })
     .toArray());
 const getTeams = async () => {
     const playersRecord = (await Player.findAll().toArray()).reduce((acc, player) => {
