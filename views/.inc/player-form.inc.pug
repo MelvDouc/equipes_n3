@@ -23,15 +23,20 @@ mixin playerForm(action, submitText)
         input.form-control(type="tel" id="phoneNumber" name="phoneNumber" value=p.phoneNumber placeholder="Tél.")
     div.row
       div.col
-        label.form-label(for="cat") Cat.
+        label.form-label(for="cat") Catégorie
         input.form-control(type="text" id="cat" name="cat" value=p.cat placeholder="Cat.")
       div.col
         label.form-label(for="role") Rôle
         select.form-control(name="role" id="role")
           each role in roles
             option(value=role[0] selected=(p && p.role === role[0] || role[0] === "JOUEUR"))=role[1]
-    div.row
-      div.col
+    div.row.mb-3
+      div.d-flex.align-items-end.justify-content-center.w-25
+        div.btn-group(role="group")
+          input.btn-check(type="checkbox" id="active" name="active" checked=p.active)
+          label.btn.btn-outline-secondary(for="active") Actif
+          label.btn.btn-outline-secondary(for="active") Inactif
+      div.w-75
         label.form-label(for="refereeTitle") Titre d'arbitre
         input.form-control(type="text" id="refereeTitle" name="refereeTitle" value=p.refereeTitle placeholder="Titre d'arbitre")
     div.d-flex.justify-content-center.align-items-center
