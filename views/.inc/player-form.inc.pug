@@ -33,9 +33,10 @@ mixin playerForm(action, submitText)
     div.row.mb-3
       div.d-flex.align-items-end.justify-content-center.w-25
         div.btn-group(role="group")
-          input.btn-check(type="checkbox" id="active" name="active" checked=p.active)
-          label.btn.btn-outline-secondary(for="active") Actif
-          label.btn.btn-outline-secondary(for="active") Inactif
+          input.btn-check(type="radio" id="active" name="active" value="active" checked=p.active)
+          label.btn.btn-outline-warning(for="active") Actif
+          input.btn-check(type="radio" id="inactive" name="active" value="inactive" checked=!p.active)
+          label.btn.btn-outline-secondary(for="inactive") Inactif
       div.w-75
         label.form-label(for="refereeTitle") Titre d'arbitre
         input.form-control(type="text" id="refereeTitle" name="refereeTitle" value=p.refereeTitle placeholder="Titre d'arbitre")

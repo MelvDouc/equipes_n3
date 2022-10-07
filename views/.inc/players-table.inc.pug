@@ -8,6 +8,7 @@ table.table.table-striped.table-dark
       th Tél.
       th Cat.
       th Titre d'arbitre
+      th Actif
       th Actions
   tbody
     each _p in players
@@ -21,6 +22,7 @@ table.table.table-striped.table-dark
         td=_p.phoneNumber
         td=_p.cat
         td=_p.refereeTitle
+        td=_p.active ? "Oui" : "Non"
         td
           div.d-flex.align-items-center.justify-content-around
             a(href=`${routes.ADMIN.UPDATE_PLAYER}?ffeId=${_p.ffeId}`)

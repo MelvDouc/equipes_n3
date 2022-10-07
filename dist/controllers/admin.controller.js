@@ -9,17 +9,23 @@ import matchModel from "../models/match.model.js";
 import playerModel from "../models/player.model.js";
 import Routes from "../routes/Routes.js";
 class AdminController extends Controller {
+    trim(input) {
+        if (input === undefined)
+            return "";
+        return input.trim();
+    }
     getPlayer(body) {
         return {
-            email: body.email ?? "",
-            ffeId: body.ffeId ?? "",
-            fideId: String(+body.fideId),
-            lastName: body.lastName ?? "",
-            firstName: body.firstName ?? "",
-            phoneNumber: body.phoneNumber ?? "",
-            cat: body.cat ?? "",
-            refereeTitle: body.refereeTitle ?? null,
-            role: parseInt(body.role)
+            email: this.trim(body.email),
+            ffeId: this.trim(body.ffeId),
+            fideId: this.trim(body.fideId),
+            lastName: this.trim(body.lastName),
+            firstName: this.trim(body.firstName),
+            phoneNumber: this.trim(body.phoneNumber),
+            cat: this.trim(body.cat),
+            refereeTitle: this.trim(body.refereeTitle) || null,
+            role: parseInt(body.role),
+            active: body.active === "active"
         };
     }
     redirectWithError(req, res, player, errors) {
