@@ -7,5 +7,6 @@ block main
   div
     p=match.date
     p=match.city
-    each p in match.players
-      div=`${p.firstName} ${p.lastName}`
+    div.players
+      each email in match.players
+        player-fetcher(data-email=email)
