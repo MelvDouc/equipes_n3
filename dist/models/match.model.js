@@ -49,9 +49,16 @@ const getTeams = async () => {
     }).toArray();
 };
 export default {
+    collection,
     addPlayer,
     removePlayer,
-    getMatchByRound: (round) => collection.find({ round }).tryNext(),
+    getMatchByRound: async (round) => {
+        const match = await collection.find({ round }).tryNext();
+        if (!match)
+            return null;
+        match.date = formatDate(match.date);
+        return match;
+    },
     getRounds: () => collection.find().map((match) => match.round).sort({ round: 1 }).toArray(),
     getPlayerMatches,
     getTeams

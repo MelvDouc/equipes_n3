@@ -7,7 +7,5 @@ block main
   div
     p=match.date
     p=match.city
-    each p in players
-      div
-        span=`${p.lastName} ${p.firstName}`
-        span=p.rating
+    each p in match.players
+      div=`${p.firstName} ${p.lastName}`

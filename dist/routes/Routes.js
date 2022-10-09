@@ -7,6 +7,7 @@ const Routes = {
     LOGOUT: "/deconnexion",
     API: {
         UPDATE_PLAYER: API + "/modif-joueur",
+        RATING: API + "/classement/:email",
     },
     ADMIN: {
         HOME: ADMIN,

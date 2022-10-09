@@ -6,8 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import Controller from "../core/Controller.js";
 import matchModel from "../models/match.model.js";
+import playerModel from "../models/player.model.js";
+import webScraperService from "../services/web-scraper.service.js";
 import Routes from "../routes/Routes.js";
 class ApiController extends Controller {
+    async getPlayerRating(req, res) {
+        const { email } = req.params;
+        const player = await playerModel.collection.findOne({ email });
+        res.contentType("html");
+        if (!player)
+            return res.end(0);
+        return res.end(await webScraperService.fetchRating(player.fideId));
+    }
     async updatePlayer(req, res) {
         if (!req.session?.player)
             return res.json({ success: false });
@@ -21,6 +31,9 @@ class ApiController extends Controller {
         return res.json({ success: true });
     }
 }
+__decorate([
+    Controller.Get(Routes.API.RATING)
+], ApiController.prototype, "getPlayerRating", null);
 __decorate([
     Controller.Patch(Routes.API.UPDATE_PLAYER)
 ], ApiController.prototype, "updatePlayer", null);
