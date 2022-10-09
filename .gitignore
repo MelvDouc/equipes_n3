@@ -2,6 +2,7 @@
 /node_modules
 /src
 /static/scss
+/static/ts
 .env
 .env.unused
 .todo
