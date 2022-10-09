@@ -13,10 +13,14 @@ class ApiController extends Controller {
     async getPlayerRating(req, res) {
         const { email } = req.params;
         const player = await playerModel.collection.findOne({ email });
-        res.contentType("html");
         if (!player)
-            return res.end(0);
-        return res.end(await webScraperService.fetchRating(player.fideId));
+            return res.json(null);
+        const rating = await webScraperService.fetchRating(player.fideId);
+        player.rating = rating;
+        delete player._id;
+        delete player.token;
+        delete player.password;
+        return res.json(player);
     }
     async updatePlayer(req, res) {
         if (!req.session?.player)
@@ -32,7 +36,7 @@ class ApiController extends Controller {
     }
 }
 __decorate([
-    Controller.Get(Routes.API.RATING)
+    Controller.Get(Routes.API.GET_PLAYER)
 ], ApiController.prototype, "getPlayerRating", null);
 __decorate([
     Controller.Patch(Routes.API.UPDATE_PLAYER)
