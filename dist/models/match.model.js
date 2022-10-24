@@ -1,7 +1,7 @@
 import db from "../database/db.js";
 import Player from "./player.model.js";
 const collection = db.collection("matches");
-const dateFormatter = new Intl.DateTimeFormat("fr-Fr", {
+const dateFormatter = new Intl.DateTimeFormat("fr-FR", {
     weekday: "long",
     day: "2-digit",
     month: "2-digit",
@@ -38,7 +38,9 @@ const getTeams = async () => {
         acc[player.email] = player;
         return acc;
     }, {});
-    return collection.find().map((match) => {
+    return collection
+        .find()
+        .map((match) => {
         const { _id, date, players, drivers, ...props } = match;
         return {
             date: formatDate(date),
@@ -46,7 +48,8 @@ const getTeams = async () => {
             drivers: drivers.map(p => playersRecord[p]),
             ...props
         };
-    }).toArray();
+    })
+        .toArray();
 };
 export default {
     collection,
