@@ -5,9 +5,9 @@ nav.navbar.navbar-expand-lg.navbar-dark
         a.nav-link(href=routes.MATCHES) Matchs
       if player.role < 2
         li.nav-item
-          a.nav-link(href=`/admin/${routes.PLAYERS}`) Joueurs
+          a.nav-link(href=`/admin${routes.PLAYERS}`) Joueurs
         li.nav-item
-          a.nav-link(href=`/admin/${routes.ROUNDS}`) Rondes
+          a.nav-link(href=`/admin${routes.ROUNDS}`) Rondes
   div.pe-2.d-flex.justify-content-between.align-items-center
     u.d-inline-block.me-2=player.email
     a.fs-5.text-light.text-decoration-none.hover-red.d-flex.justify-content-center.align-items.center(href=routes.LOGOUT)

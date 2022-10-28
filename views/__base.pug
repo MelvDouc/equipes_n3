@@ -31,7 +31,7 @@ html(lang="fr")
     header.bg-primary.bg-gradient.text-light
       block header
     main.h-100.p-3.position-relative
-      if success && success.length
+      if success
         div.flash.success=success
       if errors && errors.length
         ul.mb-0.flash.errors

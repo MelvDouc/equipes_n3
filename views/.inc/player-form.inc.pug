@@ -36,10 +36,10 @@ mixin playerForm(action, submitText)
           input.btn-check(type="radio" id="active" name="active" value="active" checked=p.active)
           label.btn.btn-outline-warning(for="active") Actif
           input.btn-check(type="radio" id="inactive" name="active" value="inactive" checked=!p.active)
-          label.btn.btn-outline-secondary(for="inactive") Inactif
+          label.btn.btn-outline-light(for="inactive") Inactif
       div.w-75
         label.form-label(for="refereeTitle") Titre d'arbitre
         input.form-control(type="text" id="refereeTitle" name="refereeTitle" value=p.refereeTitle placeholder="Titre d'arbitre")
     div.d-flex.justify-content-center.align-items-center
       button.btn.btn-success.me-2(type="submit")=submitText
-      a.text-light(href=`/admin/${routes.HOME}`) Annuler
+      a.text-light(href=`/admin${routes.HOME}`) Annuler

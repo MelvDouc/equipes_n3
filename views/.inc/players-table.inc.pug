@@ -25,9 +25,9 @@ table.table.table-striped.table-dark
         td=_p.active ? "Oui" : "Non"
         td
           div.d-flex.align-items-center.justify-content-around
-            a(href=`/admin/${routes.UPDATE_PLAYER}?ffeId=${_p.ffeId}`)
+            a(href=`/admin${routes.UPDATE_PLAYER}?ffeId=${_p.ffeId}`)
               i.fa-sharp.fa-solid.fa-pen
             if _p.email != player.email && _p.role > player.role
-              form(is="delete-player-form" action=`/admin/${routes.DELETE_PLAYER}?ffeId=${_p.ffeId}`)
+              form(is="delete-player-form" action=`/admin${routes.DELETE_PLAYER}?ffeId=${_p.ffeId}`)
                 button.all-unset.cursor-pointer.text-danger(type="submit")
                   i.fa-sharp.fa-solid.fa-trash

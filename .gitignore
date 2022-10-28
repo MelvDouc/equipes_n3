@@ -1,6 +1,6 @@
 /.vscode
 /node_modules
-/server/**/*.ts
+/server/src
 /views/static/scss
 /views/static/ts
 .env
