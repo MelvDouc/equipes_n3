@@ -9,4 +9,18 @@ block main
     p=match.city
     div.players
       each email in match.players
-        player-fetcher(data-email=email)
+        span(data-email=email)
+
+block javascripts
+  script(async).
+    const elements = [...document.querySelectorAll("[data-email]")];
+    const players = elements.map(async (element) => {
+      const player = await fetch(`/api/v1/voir-joueur/${element.dataset.email}`).then((res) => res.json());
+      return player;
+    });
+    players.sort((a, b) => -a.rating + b.rating);
+    players.forEach((player, i) => {
+      const element = elements[i];
+      delete element.dataset.email;
+      element.innerText = `${player.firstName} ${player.lastName} ${player.rating}`;
+    });

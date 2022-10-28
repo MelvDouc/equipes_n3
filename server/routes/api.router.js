@@ -1,10 +1,10 @@
-import matchModel from "../../models/match.model.js";
-import playerModel from "../../models/player.model.js";
-import webScraperService from "../../services/web-scraper.service.js";
-import Routes from "../Routes.js";
+import matchModel from "../models/match.model.js";
+import playerModel from "../models/player.model.js";
+import webScraperService from "../services/web-scraper.service.js";
+import Routes from "./Routes.js";
 import { Router } from "express";
 const router = Router();
-router.get(Routes.API.GET_PLAYER, async (req, res) => {
+router.get(Routes.GET_PLAYER, async (req, res) => {
     const { email } = req.params;
     const player = await playerModel.collection.findOne({ email });
     if (!player)
@@ -16,7 +16,7 @@ router.get(Routes.API.GET_PLAYER, async (req, res) => {
     delete player.password;
     return res.json(player);
 });
-router.patch(Routes.API.UPDATE_PLAYER, async (req, res) => {
+router.patch(Routes.UPDATE_PLAYER, async (req, res) => {
     if (!req.session?.player)
         return res.json({ success: false });
     const { round, list, checked } = req.body;

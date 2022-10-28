@@ -9,4 +9,4 @@ append header
 block main
   div.h-100.w-100.d-flex.justify-content-center.align-items-center
     include /.inc/player-form.inc.pug
-    +playerForm(routes.ADMIN.UPDATE_PLAYER + "?ffeId=" + p.ffeId, "Modifier")
+    +playerForm(`/admin/${routes.UPDATE_PLAYER}?ffeId=${p.ffeId}`, "Modifier")

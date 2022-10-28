@@ -1,8 +1,8 @@
 /.vscode
 /node_modules
-/src
-/static/scss
-/static/ts
+/server/**/*.ts
+/views/static/scss
+/views/static/ts
 .env
 .env.unused
 .todo

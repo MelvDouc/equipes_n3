@@ -1,8 +1,7 @@
 import { Router } from "express";
-import matchModel from "../../models/match.model.js";
-import playerModel from "../../models/player.model.js";
-import Routes from "../Routes.js";
-// import webScraperService from "../services/web-scraper.service.js";
+import matchModel from "../models/match.model.js";
+import playerModel from "../models/player.model.js";
+import Routes from "./Routes.js";
 const router = Router();
 const trim = (input) => {
     if (input === undefined)
@@ -44,9 +43,10 @@ router.use((req, res, next) => {
     res.locals.title = "Admin | Équipe Thionville";
     next();
 });
-router.get(Routes.ADMIN.HOME, home);
-router.get(Routes.ADMIN.PLAYERS, home);
-router.get(Routes.ADMIN.ROUNDS, async (req, res) => {
+router
+    .get(Routes.HOME, home)
+    .get(Routes.PLAYERS, home)
+    .get(Routes.ROUNDS, async (req, res) => {
     const round = parseInt(req.query.rd);
     if (isNaN(round))
         return res.render("admin/rounds", {
@@ -55,9 +55,10 @@ router.get(Routes.ADMIN.ROUNDS, async (req, res) => {
     const match = await matchModel.getMatchByRound(round);
     return (match)
         ? res.render("admin/round", { match })
-        : res.redirect(Routes.ADMIN.ROUNDS);
+        : res.redirect(Routes.ROUNDS);
 });
-router.route(Routes.ADMIN.ADD_PLAYER)
+router
+    .route(Routes.ADD_PLAYER)
     .get((req, res) => {
     const p = res.locals.temp_player ?? {};
     delete res.locals.temp_player;
@@ -83,16 +84,17 @@ router.route(Routes.ADMIN.ADD_PLAYER)
         console.log(error);
     }
     finally {
-        return res.redirect(Routes.ADMIN.PLAYERS);
+        return res.redirect(Routes.PLAYERS);
     }
 });
-router.route(Routes.ADMIN.UPDATE_PLAYER)
+router
+    .route(Routes.UPDATE_PLAYER)
     .get(async (req, res) => {
     const temp_player = res.locals.temp_player ?? (await playerModel.findOne({ ffeId: req.query.ffeId }));
     delete res.locals.temp_player;
     if (!temp_player) {
         req.flash("errors", ["Joueur non trouvé."]);
-        return res.redirect(Routes.ADMIN.PLAYERS);
+        return res.redirect(Routes.PLAYERS);
     }
     return res.render("admin/player-update", {
         p: temp_player,
@@ -102,7 +104,7 @@ router.route(Routes.ADMIN.UPDATE_PLAYER)
     .post(async (req, res) => {
     const dbPlayer = await playerModel.findOne({ ffeId: req.query.ffeId });
     if (!dbPlayer)
-        return res.redirect(Routes.ADMIN.PLAYERS);
+        return res.redirect(Routes.PLAYERS);
     const player = getPlayer(req.body);
     if (player.role < req.session.player.role)
         return redirectWithError(req, res, player, ["Vous n'êtes pas autorisé(e) à attribuer à un joueur un rôle supérieur au vôtre."]);
@@ -115,9 +117,9 @@ router.route(Routes.ADMIN.UPDATE_PLAYER)
         return redirectWithError(req, res, player, errors);
     await playerModel.update(dbPlayer, player);
     req.flash("success", "Le joueur a bien été modifié.");
-    return res.redirect(Routes.ADMIN.PLAYERS);
+    return res.redirect(Routes.PLAYERS);
 });
-router.delete(Routes.ADMIN.DELETE_PLAYER, async (req, res) => {
+router.delete(Routes.DELETE_PLAYER, async (req, res) => {
     try {
         const player = await playerModel.findOne({ ffeId: req.query.ffeId });
         if (!player || player.email === req.session.player.email || !(player.role > req.session.player.role))

@@ -1,11 +1,10 @@
 import { Router } from "express";
-import matchModel from "../../models/match.model.js";
-import playerModel from "../../models/player.model.js";
-import Routes from "../Routes.js";
-const router = Router();
-export const pageNotFound = (req, res) => {
-    return res.status(404).render("404", { title: "Page non trouvée" });
-};
+import matchModel from "../models/match.model.js";
+import playerModel from "../models/player.model.js";
+import adminRouter from "./admin.router.js";
+import apiRouter from "./api.router.js";
+import Routes from "./Routes.js";
+const mainRouter = Router();
 const redirectIfNotLoggedIn = (req, res, next) => {
     if (!req.session.player)
         return res.redirect(Routes.LOGIN);
@@ -20,12 +19,15 @@ const home = async (req, res) => {
         matches: await matchModel.getPlayerMatches(player.email)
     });
 };
-router.get(Routes.HOME, redirectIfNotLoggedIn, home);
-router.get(Routes.MATCHES, redirectIfNotLoggedIn, home);
-router.route(Routes.LOGIN)
+mainRouter.use("/admin", adminRouter);
+mainRouter.use("/api/v1", apiRouter);
+mainRouter
+    .get(Routes.HOME, redirectIfNotLoggedIn, home)
+    .get(Routes.MATCHES, redirectIfNotLoggedIn, home);
+mainRouter
+    .route(Routes.LOGIN)
     .get((req, res) => {
     if (req.session.player) {
-        console.log(req.session);
         req.flash("success", "Vous êtes déjà connecté(e).");
         return res.redirect(Routes.MATCHES);
     }
@@ -45,8 +47,12 @@ router.route(Routes.LOGIN)
     req.flash("success", "Vous êtes à présent connecté(e).");
     res.redirect(Routes.HOME);
 });
-router.get(Routes.LOGOUT, (req, res) => {
+mainRouter
+    .get(Routes.LOGOUT, (req, res) => {
     delete req.session.player;
     res.redirect(Routes.LOGIN);
+})
+    .get("*", (req, res) => {
+    return res.status(404).render("404", { title: "Page non trouvée" });
 });
-export default router;
+export default mainRouter;

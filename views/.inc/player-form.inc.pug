@@ -42,4 +42,4 @@ mixin playerForm(action, submitText)
         input.form-control(type="text" id="refereeTitle" name="refereeTitle" value=p.refereeTitle placeholder="Titre d'arbitre")
     div.d-flex.justify-content-center.align-items-center
       button.btn.btn-success.me-2(type="submit")=submitText
-      a.text-light(href=routes.ADMIN.HOME) Annuler
+      a.text-light(href=`/admin/${routes.HOME}`) Annuler

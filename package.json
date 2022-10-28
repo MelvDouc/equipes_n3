@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --files src/app.ts",
+    "dev": "nodemon --files server/app.ts",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node server/app.js"
   },
   "keywords": [],
   "author": "",
