@@ -47,14 +47,13 @@ router
     .get(Routes.HOME, home)
     .get(Routes.PLAYERS, home)
     .get(Routes.ROUNDS, async (req, res) => {
-    const round = parseInt(req.query.rd);
+    const round = parseInt(req.query.round);
     if (isNaN(round))
         return res.render("admin/rounds", {
             rounds: await db.matches.find().sort({ round: 1 }).toArray()
         });
 });
-router
-    .route(Routes.ADD_PLAYER)
+router.route(Routes.ADD_PLAYER)
     .get((req, res) => {
     const p = res.locals.temp_player ?? {};
     delete res.locals.temp_player;
@@ -111,7 +110,7 @@ router
     // const errors = [...playerModel.getErrors(player)];
     // if (errors.length)
     //   return redirectWithError(req, res, player, errors);
-    await db.players.updateOne({ ffeId: dbPlayer.ffeId }, player);
+    await db.players.updateOne({ ffeId: dbPlayer.ffeId }, { $set: { ...player } });
     req.flash("success", "Le joueur a bien été modifié.");
     return res.redirect(`/admin${Routes.PLAYERS}`);
 });

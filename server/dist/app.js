@@ -5,11 +5,12 @@ import flash from "connect-flash";
 import db from "./database/db.js";
 import mainRouter from "./routes/main.router.js";
 import Routes from "./routes/Routes.js";
-if (process.env.NODE_ENV !== "production")
-    (await import("dotenv")).config();
 const isProd = process.env.NODE_ENV === "production";
+if (!isProd)
+    (await import("dotenv")).config();
 const port = process.env.PORT ?? 5050;
 const app = express();
+console.dir(app);
 app.set("trust proxy", 1);
 app.set("view engine", "pug");
 app.locals.basedir = app.get("views");
